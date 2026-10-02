@@ -61,14 +61,14 @@
 
 | 계열 | 소유 컴포넌트 | 절 |
 |---|---|---|
-| 스킬 도메인 | `C3` `spec-core` | [§3](#3-스킬-도메인-모델-c3) |
-| 알려진 확장 레지스트리 | `C3` `spec-core` | [§4](#4-알려진-확장-레지스트리-c3) |
-| 파서 계약 | `C3` `spec-core` | [§5](#5-파서-계약-c3) |
-| 정적 분석 | `C5` `script-analyzer` | [§6](#6-정적-분석-모델-c5) |
-| 평가 도메인 | `C7` `eval-engine` / `C8` `RunAdapter` | [§7](#7-평가-도메인-모델-c7c8) |
-| 패키징·설치 | `C10` `packager` / `C11` `installer` | [§8](#8-패키징--설치-모델-c10c11) |
-| IPC 계약 | `C9` `ipc-contract` | [§9](#9-ipc-계약-c9) |
-| 경로 안전성 | `C4` `skill-io` | [§10](#10-경로-안전성-데이터-c4) |
+| 스킬 도메인 | `C3` `spec-core` | [§3](#3-스킬-도메인-모델-c3-spec-core) |
+| 알려진 확장 레지스트리 | `C3` `spec-core` | [§4](#4-알려진-확장-레지스트리-c3-spec-core) |
+| 파서 계약 | `C3` `spec-core` | [§5](#5-파서-계약-c3-spec-core) |
+| 정적 분석 | `C5` `script-analyzer` | [§6](#6-정적-분석-모델-c5-script-analyzer) |
+| 평가 도메인 | `C7` `eval-engine` / `C8` `RunAdapter` | [§7](#7-평가-도메인-모델-c7-eval-engine--c8-runadapter) |
+| 패키징·설치 | `C10` `packager` / `C11` `installer` | [§8](#8-패키징--설치-모델-c10-packager--c11-installer) |
+| IPC 계약 | `C9` `ipc-contract` | [§9](#9-ipc-계약-c9-ipc-contract) |
+| 경로 안전성 | `C4` `skill-io` | [§10](#10-경로-안전성-데이터-c4-skill-io) |
 
 ---
 

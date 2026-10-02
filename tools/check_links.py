@@ -1,30 +1,37 @@
 #!/usr/bin/env python3
-"""docs/ 내부 링크 검증기.
+"""저장소 문서 링크 검증기.
 
-GitHub 슬러그 규칙을 정확히 재현하고, 깨진 앵커를 자동 수정한다.
-사용법:  python3 tools/check_links.py [--fix]
+GitHub 슬러그 규칙을 정확히 재현하고, 깨진 앵커를 찾거나(--fix) 고친다.
+
+사용법:
+  python3 tools/check_links.py           # 검사만 (위반 시 exit 1)
+  python3 tools/check_links.py --fix     # 고칠 수 있는 앵커를 자동 수정
+
+검사 대상은 저장소 루트 기준 상대 경로로 관리한다. docs/ 밖의 문서
+(AGENTS.md)도 같은 규칙을 따른다.
 """
 from __future__ import annotations
 
+import os
 import re
 import sys
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
-DOCS = Path(__file__).resolve().parent.parent / "docs"
+ROOT = Path(__file__).resolve().parent.parent
+
 FILES = [
-    "README.md",
-    "00-convention.md",
-    "01-architecture.md",
-    "02-data-design.md",
-    "03-ui-design.md",
-    "04-development-plan.md",
-    "PRD.md",
+    "AGENTS.md",
+    "docs/README.md",
+    "docs/00-convention.md",
+    "docs/01-architecture.md",
+    "docs/02-data-design.md",
+    "docs/03-ui-design.md",
+    "docs/04-development-plan.md",
+    "docs/PRD.md",
 ]
-# 외부 경로(저장소 밖)는 존재를 확인할 수 없으므로 제외
+
 EXTERNAL_PREFIXES = ("http://", "https://", "mailto:")
-OUTSIDE = {"../.omx/plans/prd-agent-skill-studio.md"}
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*?)\s*$", re.MULTILINE)
 LINK = re.compile(r"\[([^\]]*)\]\(([^)\s]+)\)")
@@ -39,22 +46,20 @@ def github_slug(text: str) -> str:
     4. 공백 -> 하이픈
     """
     s = text.strip().lower()
-    s = re.sub(r"`([^`]*)`", r"\1", s)              # `code`
-    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)  # [text](url)
-    s = re.sub(r"[*_]{1,2}", "", s)                 # **bold** _em_
+    s = re.sub(r"`([^`]*)`", r"\1", s)
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)
+    s = re.sub(r"[*_]{1,2}", "", s)
     out = []
     for ch in s:
         if ch.isalnum() or ch in " -_" or ord(ch) > 0x2E80:
             out.append(ch)
-        # 그 외(괄호, 역따옴표, 기호 등)는 제거 — GitHub과 동일
-    s = "".join(out)
-    return s.replace(" ", "-")
+    return "".join(out).replace(" ", "-")
 
 
 def build_anchors() -> dict[str, set[str]]:
     anchors: dict[str, set[str]] = defaultdict(set)
     for name in FILES:
-        text = (DOCS / name).read_text(encoding="utf-8")
+        text = (ROOT / name).read_text(encoding="utf-8")
         for _, raw in HEADING.findall(text):
             anchors[name].add(github_slug(raw))
     return anchors
@@ -66,27 +71,29 @@ def check(fix: bool) -> int:
     fixes: list[tuple[Path, str, str]] = []
 
     for name in FILES:
-        path = DOCS / name
+        path = ROOT / name
+        base = path.parent
         text = path.read_text(encoding="utf-8")
         for _, url in LINK.findall(text):
-            if url.startswith(EXTERNAL_PREFIXES) or url in OUTSIDE:
+            if url.startswith(EXTERNAL_PREFIXES):
                 continue
             target, _, frag = url.partition("#")
-            target = target.removeprefix("./")
-            tf = name if not target else target
-            if tf not in FILES:
-                problems.append((name, url, "대상 파일 없음"))
-                continue
+            if target:
+                key = Path(os.path.normpath(base / target)).relative_to(ROOT).as_posix()
+                if key not in FILES:
+                    problems.append((name, url, f"대상 파일 없음 (해석: {key})"))
+                    continue
+            else:
+                key = name
             if not frag:
                 continue
-            if frag in anchors[tf]:
+            if frag in anchors[key]:
                 continue
-            # 유사 앵커 탐색: 접두사/부분 일치
-            cand = [a for a in anchors[tf] if a.startswith(frag[:12])]
-            if len(cand) == 1:
+            cand = [a for a in anchors[key] if a.startswith(frag[:12])]
+            if len(cand) == 1 and target:
                 fixes.append((path, url, f"{target}#{cand[0]}"))
             else:
-                near = sorted(anchors[tf], key=lambda a: abs(len(a) - len(frag)))[:3]
+                near = sorted(anchors[key], key=lambda a: abs(len(a) - len(frag)))[:3]
                 problems.append((name, url, f"앵커 없음 (유사 후보: {near})"))
 
     if fix and fixes:

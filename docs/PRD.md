@@ -625,7 +625,7 @@ mean "a client will find it," not "we wrote some bytes."
 | `Grading` | Pydantic | `assertion_results: list[AssertionResult]`, `summary` |
 | `Benchmark` | Pydantic | `run_summary: {with_skill, without_skill, delta}`, each `{pass_rate, time_seconds, tokens}` as `{mean, stddev}` |
 | `ArtifactManifest` | Pydantic | file hashes, tree hash, `name`, `specVersion`, `license?`, `compatibility?` |
-| `RunAdapter` | Protocol | `run(task, skill_dir|None, output_dir) -> ArmResult` — the provider seam (G5) |
+| `RunAdapter` | Protocol | `run(task, skill_dir\|None, output_dir) -> ArmResult` — the provider seam (G5) |
 
 ---
 
