@@ -1,7 +1,8 @@
 # 에이전트/IDE 로컬 상태 — 머신 종속이므로 커밋하지 않는다
+# 계획 문서는 docs/ 로 옮겨 관리한다 (.omx/plans/*.md -> docs/)
 .codegraph
 .omo/
-.omx/state/
+.omx/
 .opencode/
 .paseo/
 

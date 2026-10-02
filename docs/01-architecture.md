@@ -5,7 +5,7 @@
 >
 > **독자** — 전체 구현자, 아키텍트 검토자.
 >
-> **선행 문서** — [00. 문서 공통 규약](./00-convention.md), [PRD](../.omx/plans/prd-agent-skill-studio.md)
+> **선행 문서** — [00. 문서 공통 규약](./00-convention.md), [PRD](./PRD.md)
 > **후행 문서** — [02. 데이터 설계](./02-data-design.md), [03. UI 디자인](./03-ui-design.md), [04. 개발 계획](./04-development-plan.md)
 >
 > **이 문서가 소유하지 않는 것** — 필드 단위 데이터 정의는

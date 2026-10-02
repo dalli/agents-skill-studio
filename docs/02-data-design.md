@@ -5,7 +5,7 @@
 >
 > **독자** — Python 코어(`C2`) 구현자, TypeScript 프론트(`C12`) 구현자, `C9` 계약 관리자.
 >
-> **선행 문서** — [00. 문서 공통 규약](./00-convention.md), [PRD](../.omx/plans/prd-agent-skill-studio.md)
+> **선행 문서** — [00. 문서 공통 규약](./00-convention.md), [PRD](./PRD.md)
 > **후행 문서** — [01. 아키텍처](./01-architecture.md), [03. UI 디자인](./03-ui-design.md), [04. 개발 계획](./04-development-plan.md)
 >
 > **상태** — 확정. 이 문서의 제약 번호(`D-n`)는 본 문서 소유다.

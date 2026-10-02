@@ -898,4 +898,4 @@ The PRD is complete when **every** AC in §6 is green in CI and an architect rev
    (`` !`cmd` ``, ` ```! ``), not just `scripts/` — verified by a fixture that contains
    nothing but a `SKILL.md` and is still correctly flagged.
 
-**Next step:** `/ralph "implement the PRD at .omx/plans/prd-agent-skill-studio.md"`
+**Next step:** `/ralph "implement the PRD at docs/PRD.md"`

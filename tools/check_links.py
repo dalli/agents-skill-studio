@@ -20,6 +20,7 @@ FILES = [
     "02-data-design.md",
     "03-ui-design.md",
     "04-development-plan.md",
+    "PRD.md",
 ]
 # 외부 경로(저장소 밖)는 존재를 확인할 수 없으므로 제외
 EXTERNAL_PREFIXES = ("http://", "https://", "mailto:")
