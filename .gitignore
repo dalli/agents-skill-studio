@@ -1,0 +1,36 @@
+# 에이전트/IDE 로컬 상태 — 머신 종속이므로 커밋하지 않는다
+.codegraph
+.omo/
+.omx/state/
+.opencode/
+.paseo/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Node / Rust (구현 착수 시 추가될 예정)
+node_modules/
+dist/
+target/
+*.tsbuildinfo
+
+# 에디터 / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# 환경 비밀값 — 스킬은 사용자 프로젝트에 배포되므로 평문 키는 절대 커밋하지 않는다
+.env
+.env.*
+*.pem
+*.key
